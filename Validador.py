@@ -11,12 +11,9 @@ while True:
     else:
         print('Digite apenas numeros.!')
 
-digito1 = int(cpf[9:10])
-digito2 = int(cpf[10:])
-verificador1 = 0
-verificador2 = 0
-
 ### Validação do primeiro Digito
+digito1 = int(cpf[9:10])
+verificador1 = 0
 for i, v1 in zip(range(1, 10), range(10, 1, -1)):
     verificador1 += int(cpf[i - 1:i]) * v1
 v1 = (11 - (verificador1 % 11))
@@ -26,6 +23,8 @@ else:
     pass
 
 ### Validação do segundo Digito
+digito2 = int(cpf[10:])
+verificador2 = 0
 for i, v2 in zip(range(1, 11), range(11, 1, -1)):
     verificador2 += int(cpf[i - 1:i]) * v2
 v2 = (11 - (verificador2 % 11))
