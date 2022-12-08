@@ -1,31 +1,18 @@
 import PySimpleGUI as sg
 
-
-layout = [
-    [sg.Text('Digite o CPF:')],
-    [sg.InputText(key='entrada_cpf')],
-    [sg.Button('Consultar'), sg.Button('Cancelar')],
-    [sg.Text(key='texto_saida')],
-    [sg.Text(key='texto_saida2')]
-]
-
-janela = sg.Window('Validador de CPF', layout)
-
 invalido = ['00000000000', '11111111111', '22222222222', '33333333333', '44444444444', '55555555555', '66666666666', '77777777777', '88888888888', '99999999999']
 
-while True:
-    evento, valores = janela.read()
-    if evento == sg.WIN_CLOSED or evento == 'Cancelar':
-        break
-
-    if evento == 'Consultar':
-        janela['texto_saida'].update(f"O CPF digitado: {valores['entrada_cpf']}.")
+def validador_cpf():
+    ### Verifica o Input
+    while True:
         cpf = str(valores['entrada_cpf'])
         if cpf.isnumeric():
             if len(cpf) != 11 or cpf in invalido:
-                pass
-    else:
-        janela['texto_saida2'].update('Não é um CPF Válido.')
+                return ('CPF invalido!')
+            else:
+                 break
+        else:
+            return ('Digite apenas numeros!')
 
     ### Validação do primeiro Digito
     digito1 = int(cpf[9:10])
@@ -52,10 +39,29 @@ while True:
     ### Verifica validade CPF
     if v1 == digito1:
         if v2 == digito2:
-            janela['texto_saida2'].update('É um CPF Válido.')
+            return ('CPF Valido.')
         else:
-            janela['texto_saida2'].update('Não é um CPF Válido.')
+            return ('CPF Invalido.')
     else:
-        janela['texto_saida2'].update('Não é um CPF Válido.')
+        return ('CPF Invalido.')
+
+layout = [
+    [sg.Text('Digite o CPF:')],
+    [sg.InputText(key='entrada_cpf')],
+    [sg.Button('Consultar'), sg.Button('Cancelar')],
+    [sg.Text(key='texto_saida')],
+    [sg.Text(key='info')]
+]
+
+janela = sg.Window('Validador de CPF', layout)
+
+while True:
+    evento, valores = janela.read()
+    if evento == sg.WIN_CLOSED or evento == 'Cancelar':
+        break
+
+    if evento == 'Consultar':
+        janela['texto_saida'].update(f"O CPF digitado: {valores['entrada_cpf']}.")
+        janela['info'].update(validador_cpf())
 
 janela.close()
