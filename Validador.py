@@ -37,5 +37,7 @@ else:
 if v1 == digito1:
     if v2 == digito2:
         print('CPF Valido.')
+    else:
+        print('CPF Invalido.')
 else:
     print('CPF Invalido.')
